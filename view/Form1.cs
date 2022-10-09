@@ -1,4 +1,4 @@
-﻿using Game_Kursak.model;
+﻿using Game_Kursak.view_model;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -7,55 +7,46 @@ namespace Game_Kursak
 {
     public partial class Form1 : Form
     {
-        bool goLeft, goRight, goUp, goDown, gameOver;
-        string facing = "up";
-        int playerHealth = 100;
-        int speed = 10;
-        int ammo = 10;
-        int zombieSpeed = 3;
-        int score;
-        Random randNum = new Random();
-
-        List<PictureBox> zombiesList = new List<PictureBox>();
+        View_model view_model = new View_model();
 
         public Form1()
         {
             InitializeComponent();
-            RestartGame();
+            view_model.RestartGame(player, this, GameTimer);
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
 
-            if (playerHealth > 1)
+            if (view_model.player_class.playerHealth > 1)
             {
-                healthBar.Value = playerHealth;
+                healthBar.Value = view_model.player_class.playerHealth;
             }
             else
             {
-                gameOver = true;
+                view_model.player_class.gameOver = true;
                 player.Image = Properties.Resources.dead;
                 GameTimer.Stop();
             }
 
-            txtAmmo.Text = "Ammo: " + ammo;
-            txtScore.Text = "Kills: " + score;
+            txtAmmo.Text = "Ammo: " + view_model.player_class.ammo;
+            txtScore.Text = "Kills: " + view_model.player_class.score;
 
-            if (goLeft == true && player.Left > 0)
+            if (view_model.player_class.goLeft == true && player.Left > 0)
             {
-                player.Left -= speed;
+                player.Left -= view_model.player_class.speed;
             }
-            if (goRight == true && player.Left + player.Width < this.ClientSize.Width)
+            if (view_model.player_class.goRight == true && player.Left + player.Width < this.ClientSize.Width)
             {
-                player.Left += speed;
+                player.Left += view_model.player_class.speed;
             }
-            if (goUp == true && player.Top > 45)
+            if (view_model.player_class.goUp == true && player.Top > 45)
             {
-                player.Top -= speed;
+                player.Top -= view_model.player_class.speed;
             }
-            if (goDown == true && player.Top + player.Height < this.ClientSize.Height)
+            if (view_model.player_class.goDown == true && player.Top + player.Height < this.ClientSize.Height)
             {
-                player.Top += speed;
+                player.Top += view_model.player_class.speed;
             }
 
             foreach (Control item in this.Controls)
@@ -66,7 +57,7 @@ namespace Game_Kursak
                     {
                         this.Controls.Remove(item);
                         ((PictureBox)item).Dispose();
-                        ammo += 5;
+                        view_model.player_class.ammo += 5;
                     }
                 }
 
@@ -74,27 +65,27 @@ namespace Game_Kursak
                 {
                     if (player.Bounds.IntersectsWith(item.Bounds))
                     {
-                        playerHealth -= 1;
+                        view_model.player_class.playerHealth -= 1;
                     }
 
                     if (item.Left > player.Left)
                     {
-                        item.Left -= zombieSpeed;
+                        item.Left -= view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zleft;
                     }
                     if (item.Left < player.Left)
                     {
-                        item.Left += zombieSpeed;
+                        item.Left += view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zright;
                     }
                     if (item.Top > player.Top)
                     {
-                        item.Top -= zombieSpeed;
+                        item.Top -= view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zup;
                     }
                     if (item.Top < player.Top)
                     {
-                        item.Top += zombieSpeed;
+                        item.Top += view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zdown;
                     }
                 }
@@ -105,13 +96,13 @@ namespace Game_Kursak
                     {
                         if (item.Bounds.IntersectsWith(item2.Bounds))
                         {
-                            score++;
+                            view_model.player_class.score++;
                             this.Controls.Remove(item2);
                             ((PictureBox)item2).Dispose();
                             this.Controls.Remove(item);
                             ((PictureBox)item).Dispose();
-                            zombiesList.Remove(((PictureBox)item));
-                            MakeZombies();
+                            view_model.zombiesList.Remove(((PictureBox)item));
+                            view_model.MakeZombies(player, this);
                         }
                     }
                 }
@@ -120,35 +111,35 @@ namespace Game_Kursak
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
-            if (gameOver == true)
+            if (view_model.player_class.gameOver == true)
             {
                 return;
             }
 
             if (e.KeyCode == Keys.Left)
             {
-                goLeft = true;
-                facing = "left";
+                view_model.player_class.goLeft = true;
+                view_model.player_class.facing = "left";
                 player.Image = Properties.Resources.left;
             }
 
             if (e.KeyCode == Keys.Right)
             {
-                goRight = true;
-                facing = "right";
+                view_model.player_class.goRight = true;
+                view_model.player_class.facing = "right";
                 player.Image = Properties.Resources.right;
             }
             if (e.KeyCode == Keys.Up)
             {
-                goUp = true;
-                facing = "up";
+                view_model.player_class.goUp = true;
+                view_model.player_class.facing = "up";
                 player.Image = Properties.Resources.up;
             }
 
             if (e.KeyCode == Keys.Down)
             {
-                goDown = true;
-                facing = "down";
+                view_model.player_class.goDown = true;
+                view_model.player_class.facing = "down";
                 player.Image = Properties.Resources.down;
             }
         }
@@ -157,103 +148,38 @@ namespace Game_Kursak
         {
             if (e.KeyCode == Keys.Left)
             {
-                goLeft = false;
+                view_model.player_class.goLeft = false;
             }
 
             if (e.KeyCode == Keys.Right)
             {
-                goRight = false;
+                view_model.player_class.goRight = false;
             }
             if (e.KeyCode == Keys.Up)
             {
-                goUp = false;
+                view_model.player_class.goUp = false;
             }
 
             if (e.KeyCode == Keys.Down)
             {
-                goDown = false;
+                view_model.player_class.goDown = false;
             }
 
-            if (e.KeyCode == Keys.Space && ammo > 0 && gameOver == false)
+            if (e.KeyCode == Keys.Space && view_model.player_class.ammo > 0 && view_model.player_class.gameOver == false)
             {
-                ammo--;
-                ShootBullet(facing);
+                view_model.player_class.ammo--;
+                view_model.ShootBullet(view_model.player_class.facing, player, this);
 
-                if (ammo < 1)
+                if (view_model.player_class.ammo < 1)
                 {
-                    DropAmmo();
+                    view_model.DropAmmo(player, this);
                 }
             }
 
-            if (e.KeyCode == Keys.Enter && gameOver == true)
+            if (e.KeyCode == Keys.Enter && view_model.player_class.gameOver == true)
             {
-                RestartGame();
+                view_model.RestartGame(player, this, GameTimer);
             }
-        }
-
-        private void ShootBullet(string direction)
-        {
-            Bullet shootBullet = new Bullet();
-            shootBullet.diraction = direction;
-            shootBullet.bulletLeft = player.Left + (player.Width / 2);
-            shootBullet.bulletTop = player.Top + (player.Height / 2);
-            shootBullet.MakeBullet(this);
-        }
-
-        private void MakeZombies()
-        {
-            PictureBox zombie = new PictureBox();
-            zombie.Tag = "zombie";
-            zombie.Image = Properties.Resources.zdown;
-            zombie.Left = randNum.Next(0, 900);
-            zombie.Top = randNum.Next(0, 800);
-            zombie.SizeMode = PictureBoxSizeMode.AutoSize;
-            zombiesList.Add(zombie);
-            this.Controls.Add(zombie);
-            player.BringToFront();
-        }
-
-        private void DropAmmo()
-        {
-            PictureBox ammo = new PictureBox();
-            ammo.Image = Properties.Resources.ammo_Image;
-            ammo.SizeMode = PictureBoxSizeMode.AutoSize;
-            ammo.Left = randNum.Next(10, this.ClientSize.Width - ammo.Width);
-            ammo.Top = randNum.Next(60, this.ClientSize.Height - ammo.Height);
-            ammo.Tag = "ammo";
-            this.Controls.Add(ammo);
-
-            ammo.BringToFront();
-            player.BringToFront();
-
-        }
-
-        private void RestartGame()
-        {
-            player.Image = Properties.Resources.up;
-
-            foreach (PictureBox item in zombiesList)
-            {
-                this.Controls.Remove(item);
-            }
-            zombiesList.Clear();
-
-            for (int i = 0; i < 3; i++)
-            {
-                MakeZombies();
-            }
-
-            goUp = false;
-            goDown = false;
-            goLeft = false;
-            goRight = false;
-            gameOver = false;
-
-            playerHealth = 100;
-            score = 0;
-            ammo = 10;
-
-            GameTimer.Start();
         }
 
     }
