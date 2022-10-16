@@ -1,6 +1,7 @@
 ﻿using Game_Kursak.model;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace Game_Kursak.view_model
         public void MakeZombies(PictureBox player, Form main)
         {
             PictureBox zombie = new PictureBox();
+            zombie.BackColor = Color.FromArgb(0,0,0,0);
             zombie.Tag = "zombie";
             zombie.Image = Properties.Resources.zdown;
             zombie.Left = randNum.Next(0, 900);

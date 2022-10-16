@@ -73,6 +73,26 @@ namespace Game_Kursak.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bagraund_game {
+            get {
+                object obj = ResourceManager.GetObject("bagraund_game", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bagraund_menu {
+            get {
+                object obj = ResourceManager.GetObject("bagraund_menu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dead {
             get {
                 object obj = ResourceManager.GetObject("dead", resourceCulture);
@@ -86,6 +106,16 @@ namespace Game_Kursak.Properties {
         internal static System.Drawing.Bitmap down {
             get {
                 object obj = ResourceManager.GetObject("down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap kamuflyag {
+            get {
+                object obj = ResourceManager.GetObject("kamuflyag", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

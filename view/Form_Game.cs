@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace Game_Kursak
 {
-    public partial class Form1 : Form
+    public partial class Form_Game : Form
     {
         View_model view_model = new View_model();
 
-        public Form1()
+        public Form_Game()
         {
             InitializeComponent();
             view_model.RestartGame(player, this, GameTimer);
@@ -182,5 +182,9 @@ namespace Game_Kursak
             }
         }
 
+        private void Form_Deactivate(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
