@@ -8,6 +8,8 @@ namespace Game_Kursak
     public partial class Form_Game : Form
     {
         View_model view_model = new View_model();
+        int time_shoot_zombie = 0;
+        int health_shooter = 100;
 
         public Form_Game()
         {
@@ -17,10 +19,14 @@ namespace Game_Kursak
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
+            time_shoot_zombie++;
+            if ((time_shoot_zombie % 20) == 0 && health_shooter > 1) {
+                view_model.ShootBulletZombie("left", shooter, this);
+            }
 
             if (view_model.player_class.playerHealth > 1)
             {
-                healthBar.Value = view_model.player_class.playerHealth;
+                healthBar.Value = (int)view_model.player_class.playerHealth;
             }
             else
             {
@@ -31,6 +37,8 @@ namespace Game_Kursak
 
             txtAmmo.Text = "Ammo: " + view_model.player_class.ammo;
             txtScore.Text = "Kills: " + view_model.player_class.score;
+
+            
 
             if (view_model.player_class.goLeft == true && player.Left > 0)
             {
@@ -60,7 +68,6 @@ namespace Game_Kursak
                         view_model.player_class.ammo += 5;
                     }
                 }
-
                 if (item is PictureBox && (string)item.Tag == "zombie")
                 {
                     if (player.Bounds.IntersectsWith(item.Bounds))
@@ -72,11 +79,13 @@ namespace Game_Kursak
                     {
                         item.Left -= view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zleft;
+
                     }
                     if (item.Left < player.Left)
                     {
                         item.Left += view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zright;
+                       
                     }
                     if (item.Top > player.Top)
                     {
@@ -88,6 +97,7 @@ namespace Game_Kursak
                         item.Top += view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zdown;
                     }
+
                 }
 
                 foreach (Control item2 in this.Controls)
@@ -106,6 +116,37 @@ namespace Game_Kursak
                         }
                     }
                 }
+                foreach (Control item3 in this.Controls)
+                {
+                    if (item3 is PictureBox && (string)item3.Tag == "bullet_zombie")
+                    {
+                        if (player.Bounds.IntersectsWith(item3.Bounds))
+                        {
+                            this.Controls.Remove(item3);
+                            view_model.player_class.playerHealth -= 10;
+                        }
+                    }
+                }
+
+                foreach (Control item4 in this.Controls)
+                {
+                    if (item is PictureBox && (string)item.Tag == "bullet" && item4 is PictureBox && (string)item4.Tag == "shooter")
+                    {
+                        if (item4.Bounds.IntersectsWith(item.Bounds))
+                        {
+                            health_shooter -= 20;
+                            this.Controls.Remove(item);
+                            if (health_shooter == 0)
+                            {
+                                health_shooter = 0;
+                                time_shoot_zombie = 0;
+                                this.Controls.Remove(item4);
+                                
+                            }
+                        }
+                    }
+                }
+
             }
         }
 
@@ -169,6 +210,7 @@ namespace Game_Kursak
             {
                 view_model.player_class.ammo--;
                 view_model.ShootBullet(view_model.player_class.facing, player, this);
+                
 
                 if (view_model.player_class.ammo < 1)
                 {

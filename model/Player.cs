@@ -11,7 +11,7 @@ namespace Game_Kursak.model
     {
        public bool goLeft, goRight, goUp, goDown, gameOver;
         public string facing;
-        public int playerHealth;
+        public double playerHealth;
         public int speed;
         public int ammo;
         public int score;

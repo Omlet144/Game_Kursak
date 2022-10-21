@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="model\Bullet.cs" />
+    <Compile Include="model\Bullet_Zombie.cs" />
     <Compile Include="model\Player.cs" />
     <Compile Include="view\Form_Game.cs">
       <SubType>Form</SubType>

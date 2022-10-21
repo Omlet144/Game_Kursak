@@ -35,7 +35,9 @@
             this.healthBar = new System.Windows.Forms.ProgressBar();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.player = new System.Windows.Forms.PictureBox();
+            this.shooter = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shooter)).BeginInit();
             this.SuspendLayout();
             // 
             // txtAmmo
@@ -99,6 +101,16 @@
             this.player.TabIndex = 4;
             this.player.TabStop = false;
             // 
+            // shooter
+            // 
+            this.shooter.Image = global::Game_Kursak.Properties.Resources.zleft;
+            this.shooter.Location = new System.Drawing.Point(784, 328);
+            this.shooter.Name = "shooter";
+            this.shooter.Size = new System.Drawing.Size(100, 50);
+            this.shooter.TabIndex = 5;
+            this.shooter.TabStop = false;
+            this.shooter.Tag = "shooter";
+            // 
             // Form_Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -106,6 +118,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(924, 661);
+            this.Controls.Add(this.shooter);
             this.Controls.Add(this.player);
             this.Controls.Add(this.healthBar);
             this.Controls.Add(this.label1);
@@ -120,6 +133,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
             ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shooter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,6 +147,7 @@
         private System.Windows.Forms.ProgressBar healthBar;
         private System.Windows.Forms.PictureBox player;
         private System.Windows.Forms.Timer GameTimer;
+        private System.Windows.Forms.PictureBox shooter;
     }
 }
 

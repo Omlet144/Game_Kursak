@@ -1,29 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Game_Kursak.model
 {
-    internal class Bullet
+    internal class Bullet_Zombie
     {
         public string diraction;
         public int bulletLeft;
         public int bulletTop;
 
         private int speed = 10;
-        private PictureBox bullet = new PictureBox();
+        private PictureBox bullet_zombie = new PictureBox();
         private Timer bulletTimer = new Timer();
 
         public void MakeBullet(Form form)
         {
-            bullet.BackColor = Color.White;
-            bullet.Size = new Size(5, 5);
-            bullet.Tag = "bullet";
-            bullet.Left = bulletLeft;
-            bullet.Top = bulletTop;
-            bullet.BringToFront();
+            bullet_zombie.BackColor = Color.White;
+            bullet_zombie.Size = new Size(5, 5);
+            bullet_zombie.Tag = "bullet_zombie";
+            bullet_zombie.Left = bulletLeft;
+            bullet_zombie.Top = bulletTop;
+            bullet_zombie.BringToFront();
 
-            form.Controls.Add(bullet);
+            form.Controls.Add(bullet_zombie);
 
             bulletTimer.Interval = speed;
             bulletTimer.Tick += new EventHandler(BulletTimerEvent);
@@ -35,30 +39,29 @@ namespace Game_Kursak.model
         {
             if (diraction == "left")
             {
-                bullet.Left -= speed;
+                bullet_zombie.Left -= speed;
             }
             if (diraction == "right")
             {
-                bullet.Left += speed;
+                bullet_zombie.Left += speed;
             }
             if (diraction == "up")
             {
-                bullet.Top -= speed;
+                bullet_zombie.Top -= speed;
             }
             if (diraction == "down")
             {
-                bullet.Top += speed;
+                bullet_zombie.Top += speed;
             }
 
-            if (bullet.Left < 10 || bullet.Left > 860 || bullet.Top < 10 || bullet.Top > 600)
+            if (bullet_zombie.Left < 10 || bullet_zombie.Left > 860 || bullet_zombie.Top < 10 || bullet_zombie.Top > 600)
             {
                 bulletTimer.Stop();
                 bulletTimer.Dispose();
-                bullet.Dispose();
+                bullet_zombie.Dispose();
                 bulletTimer = null;
-                bullet = null;
+                bullet_zombie = null;
             }
         }
-
     }
 }

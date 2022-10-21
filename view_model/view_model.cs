@@ -15,6 +15,7 @@ namespace Game_Kursak.view_model
         public int zombieSpeed = 3;
         public Random randNum = new Random();
         public List<PictureBox> zombiesList = new List<PictureBox>();
+        public Player z = new Player("up", 100, 10, 10);
 
 
 
@@ -25,6 +26,15 @@ namespace Game_Kursak.view_model
             shootBullet.bulletLeft = player.Left + (player.Width / 2);
             shootBullet.bulletTop = player.Top + (player.Height / 2);
             shootBullet.MakeBullet(main);
+        }
+
+        public void ShootBulletZombie(string direction, PictureBox zombie, Form main)
+        {
+            Bullet_Zombie shootBulletZombie = new Bullet_Zombie();
+            shootBulletZombie.diraction = direction;
+            shootBulletZombie.bulletLeft = zombie.Left + (zombie.Width / 2);
+            shootBulletZombie.bulletTop = zombie.Top + (zombie.Height / 2);
+            shootBulletZombie.MakeBullet(main);
         }
 
         public void MakeZombies(PictureBox player, Form main)
@@ -65,7 +75,7 @@ namespace Game_Kursak.view_model
             }
             zombiesList.Clear();
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 MakeZombies(player, main);
             }
