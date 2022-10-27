@@ -15,6 +15,7 @@ namespace Game_Kursak.view_model
         public int zombieSpeed = 3;
         public Random randNum = new Random();
         public List<PictureBox> zombiesList = new List<PictureBox>();
+        public List<PictureBox> ammo_and_health = new List<PictureBox>();
         public Player z = new Player("up", 100, 10, 10);
 
 
@@ -51,6 +52,22 @@ namespace Game_Kursak.view_model
             player.BringToFront();
         }
 
+        public void MakeZombiesShooter(PictureBox player, Form main, Bitmap facingResorce, string tag)
+        {
+            PictureBox zombie_shooter = new PictureBox();
+            zombie_shooter.BackColor = Color.FromArgb(0, 0, 0, 0);
+            zombie_shooter.Tag = tag;
+            zombie_shooter.Image = facingResorce;
+            zombie_shooter.Left = randNum.Next(0, 850);
+            zombie_shooter.Top = randNum.Next(0, 700);
+            zombie_shooter.SizeMode = PictureBoxSizeMode.AutoSize;
+            zombiesList.Add(zombie_shooter);
+            main.Controls.Add(zombie_shooter);
+            player.BringToFront();
+      
+                
+        }
+
         public void DropAmmo(PictureBox player, Form main)
         {
             PictureBox ammo = new PictureBox();
@@ -60,7 +77,7 @@ namespace Game_Kursak.view_model
             ammo.Top = randNum.Next(60, main.ClientSize.Height - ammo.Height);
             ammo.Tag = "ammo";
             main.Controls.Add(ammo);
-
+            ammo_and_health.Add(ammo);
             ammo.BringToFront();
             player.BringToFront();
         }
@@ -68,12 +85,18 @@ namespace Game_Kursak.view_model
         public void RestartGame(PictureBox player, Form main, Timer GameTimer)
         {
             player.Image = Properties.Resources.up;
-
+            
             foreach (PictureBox item in zombiesList)
             {
                 main.Controls.Remove(item);
             }
             zombiesList.Clear();
+
+            foreach (PictureBox item in ammo_and_health)
+            {
+                main.Controls.Remove(item);
+            }
+            ammo_and_health.Clear();
 
             for (int i = 0; i < 1; i++)
             {

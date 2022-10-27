@@ -1,7 +1,13 @@
 ﻿using Game_Kursak.view_model;
 using System;
+using System.Drawing;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+
+
 
 namespace Game_Kursak
 {
@@ -9,7 +15,6 @@ namespace Game_Kursak
     {
         View_model view_model = new View_model();
         int time_shoot_zombie = 0;
-        int health_shooter = 100;
 
         public Form_Game()
         {
@@ -20,9 +25,6 @@ namespace Game_Kursak
         private void MainTimerEvent(object sender, EventArgs e)
         {
             time_shoot_zombie++;
-            if ((time_shoot_zombie % 20) == 0 && health_shooter > 1) {
-                view_model.ShootBulletZombie("left", shooter, this);
-            }
 
             if (view_model.player_class.playerHealth > 1)
             {
@@ -37,8 +39,6 @@ namespace Game_Kursak
 
             txtAmmo.Text = "Ammo: " + view_model.player_class.ammo;
             txtScore.Text = "Kills: " + view_model.player_class.score;
-
-            
 
             if (view_model.player_class.goLeft == true && player.Left > 0)
             {
@@ -77,29 +77,60 @@ namespace Game_Kursak
 
                     if (item.Left > player.Left)
                     {
+
+                       
                         item.Left -= view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zleft;
+                        
 
                     }
                     if (item.Left < player.Left)
                     {
+                        
                         item.Left += view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zright;
-                       
+                      
+
                     }
                     if (item.Top > player.Top)
                     {
+                       
                         item.Top -= view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zup;
+                       
+                    }
+                    if (item.Top < player.Top)
+                    {
+                       
+                        item.Top += view_model.zombieSpeed;
+                        ((PictureBox)item).Image = Properties.Resources.zdown;
+                     
+                    }
+
+                }
+                if (item is PictureBox && ((string)item.Tag == "shooter_left" || (string)item.Tag == "shooter_right"))
+                {
+                   if ((time_shoot_zombie % 20) == 0)
+                    {
+                        if ((string)item.Tag == "shooter_left")
+                        {
+                            view_model.ShootBulletZombie("left", (PictureBox)item, this);
+                        }
+                        if ((string)item.Tag == "shooter_right")
+                        {
+                            view_model.ShootBulletZombie("right", (PictureBox)item, this);
+                        }
                     }
                     if (item.Top < player.Top)
                     {
                         item.Top += view_model.zombieSpeed;
-                        ((PictureBox)item).Image = Properties.Resources.zdown;
                     }
-
+                    if (item.Top > player.Top)
+                    {
+                        item.Top -= view_model.zombieSpeed;
+                    }
                 }
-
+      
                 foreach (Control item2 in this.Controls)
                 {
                     if (item2 is PictureBox && (string)item2.Tag == "bullet" && item is PictureBox && (string)item.Tag == "zombie")
@@ -113,6 +144,14 @@ namespace Game_Kursak
                             ((PictureBox)item).Dispose();
                             view_model.zombiesList.Remove(((PictureBox)item));
                             view_model.MakeZombies(player, this);
+                            if (view_model.player_class.score == 10)
+                            {
+                                view_model.MakeZombiesShooter(player,  this, Properties.Resources.zleft, "shooter_left");
+                            }
+                            if (view_model.player_class.score == 20)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zright, "shooter_right");
+                            }
                         }
                     }
                 }
@@ -127,21 +166,23 @@ namespace Game_Kursak
                         }
                     }
                 }
-
                 foreach (Control item4 in this.Controls)
                 {
-                    if (item is PictureBox && (string)item.Tag == "bullet" && item4 is PictureBox && (string)item4.Tag == "shooter")
+                    if (item is PictureBox && (string)item.Tag == "bullet" && item4 is PictureBox && ((string)item4.Tag == "shooter_left"|| (string)item4.Tag == "shooter_right"))
                     {
                         if (item4.Bounds.IntersectsWith(item.Bounds))
                         {
-                            health_shooter -= 20;
+                            view_model.player_class.score++;
                             this.Controls.Remove(item);
-                            if (health_shooter == 0)
+                            ((PictureBox)item).Dispose();
+                            this.Controls.Remove(item4);
+                            ((PictureBox)item4).Dispose();
+                            view_model.zombiesList.Remove(((PictureBox)item4));
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zleft, "shooter_left");
+                            if (view_model.player_class.score == 20)
                             {
-                                health_shooter = 0;
-                                time_shoot_zombie = 0;
-                                this.Controls.Remove(item4);
-                                
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zright, "shooter_right");
+
                             }
                         }
                     }
