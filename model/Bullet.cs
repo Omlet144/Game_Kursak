@@ -16,8 +16,8 @@ namespace Game_Kursak.model
 
         public void MakeBullet(Form form)
         {
-            bullet.BackColor = Color.White;
-            bullet.Size = new Size(5, 5);
+            bullet.BackColor = Color.OrangeRed;
+            bullet.Size = new Size(8, 8);
             bullet.Tag = "bullet";
             bullet.Left = bulletLeft;
             bullet.Top = bulletTop;

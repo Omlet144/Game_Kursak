@@ -113,6 +113,16 @@ namespace Game_Kursak.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap hp_Image {
+            get {
+                object obj = ResourceManager.GetObject("hp_Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap kamuflyag {
             get {
                 object obj = ResourceManager.GetObject("kamuflyag", resourceCulture);

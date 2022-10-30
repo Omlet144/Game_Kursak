@@ -35,6 +35,8 @@
             this.healthBar = new System.Windows.Forms.ProgressBar();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.player = new System.Windows.Forms.PictureBox();
+            this.txtTime = new System.Windows.Forms.Label();
+            this.TimeOfGame = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +46,7 @@
             this.txtAmmo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txtAmmo.ForeColor = System.Drawing.Color.White;
-            this.txtAmmo.Location = new System.Drawing.Point(449, 14);
+            this.txtAmmo.Location = new System.Drawing.Point(286, 14);
             this.txtAmmo.Name = "txtAmmo";
             this.txtAmmo.Size = new System.Drawing.Size(93, 24);
             this.txtAmmo.TabIndex = 0;
@@ -56,7 +58,7 @@
             this.txtScore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txtScore.ForeColor = System.Drawing.Color.White;
-            this.txtScore.Location = new System.Drawing.Point(841, 14);
+            this.txtScore.Location = new System.Drawing.Point(529, 14);
             this.txtScore.Name = "txtScore";
             this.txtScore.Size = new System.Drawing.Size(71, 24);
             this.txtScore.TabIndex = 1;
@@ -99,6 +101,23 @@
             this.player.TabIndex = 4;
             this.player.TabStop = false;
             // 
+            // txtTime
+            // 
+            this.txtTime.AutoSize = true;
+            this.txtTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtTime.ForeColor = System.Drawing.Color.White;
+            this.txtTime.Location = new System.Drawing.Point(756, 13);
+            this.txtTime.Name = "txtTime";
+            this.txtTime.Size = new System.Drawing.Size(147, 24);
+            this.txtTime.TabIndex = 5;
+            this.txtTime.Text = "Time: 00:00:00";
+            // 
+            // TimeOfGame
+            // 
+            this.TimeOfGame.Interval = 1000;
+            this.TimeOfGame.Tick += new System.EventHandler(this.TimeOfGame_Tick);
+            // 
             // Form_Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -106,6 +125,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(924, 661);
+            this.Controls.Add(this.txtTime);
             this.Controls.Add(this.player);
             this.Controls.Add(this.healthBar);
             this.Controls.Add(this.label1);
@@ -133,6 +153,8 @@
         private System.Windows.Forms.ProgressBar healthBar;
         private System.Windows.Forms.PictureBox player;
         private System.Windows.Forms.Timer GameTimer;
+        private System.Windows.Forms.Label txtTime;
+        private System.Windows.Forms.Timer TimeOfGame;
     }
 }
 

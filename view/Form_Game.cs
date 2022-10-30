@@ -15,11 +15,14 @@ namespace Game_Kursak
     {
         View_model view_model = new View_model();
         int time_shoot_zombie = 0;
+        int time_game_s = 0;
+        int time_game_m = 0;
+        int time_game_h = 0;
 
         public Form_Game()
         {
             InitializeComponent();
-            view_model.RestartGame(player, this, GameTimer);
+            view_model.RestartGame(player, this, GameTimer, TimeOfGame);
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
@@ -35,10 +38,12 @@ namespace Game_Kursak
                 view_model.player_class.gameOver = true;
                 player.Image = Properties.Resources.dead;
                 GameTimer.Stop();
+                TimeOfGame.Stop();
             }
 
             txtAmmo.Text = "Ammo: " + view_model.player_class.ammo;
             txtScore.Text = "Kills: " + view_model.player_class.score;
+           
 
             if (view_model.player_class.goLeft == true && player.Left > 0)
             {
@@ -68,6 +73,32 @@ namespace Game_Kursak
                         view_model.player_class.ammo += 5;
                     }
                 }
+                if (item is PictureBox && (string)item.Tag == "hp")
+                {
+                    if (time_game_s == 35 || time_game_s == 5)
+                    {
+                        this.Controls.Remove(item);
+                        ((PictureBox)item).Dispose();
+                    }
+                    else
+                    {
+                        if (player.Bounds.IntersectsWith(item.Bounds))
+                        {
+                            this.Controls.Remove(item);
+                            ((PictureBox)item).Dispose();
+                            if (view_model.player_class.playerHealth < 100)
+                            {
+                                view_model.player_class.playerHealth += 30;
+                                if (view_model.player_class.playerHealth > 100)
+                                {
+                                    view_model.player_class.playerHealth = 100;
+                                }
+                            }
+
+                        }
+                    }
+                   
+                }
                 if (item is PictureBox && (string)item.Tag == "zombie")
                 {
                     if (player.Bounds.IntersectsWith(item.Bounds))
@@ -77,34 +108,23 @@ namespace Game_Kursak
 
                     if (item.Left > player.Left)
                     {
-
-                       
                         item.Left -= view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zleft;
-                        
-
                     }
                     if (item.Left < player.Left)
                     {
-                        
                         item.Left += view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zright;
-                      
-
                     }
                     if (item.Top > player.Top)
                     {
-                       
                         item.Top -= view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zup;
-                       
                     }
                     if (item.Top < player.Top)
                     {
-                       
                         item.Top += view_model.zombieSpeed;
                         ((PictureBox)item).Image = Properties.Resources.zdown;
-                     
                     }
 
                 }
@@ -130,16 +150,77 @@ namespace Game_Kursak
                         item.Top -= view_model.zombieSpeed;
                     }
                 }
-      
-                foreach (Control item2 in this.Controls)
+                if (item is PictureBox && ((string)item.Tag == "shooter_up" || (string)item.Tag == "shooter_down"))
                 {
-                    if (item2 is PictureBox && (string)item2.Tag == "bullet" && item is PictureBox && (string)item.Tag == "zombie")
+                    if ((time_shoot_zombie % 20) == 0)
                     {
-                        if (item.Bounds.IntersectsWith(item2.Bounds))
+                        if ((string)item.Tag == "shooter_up")
+                        {
+                            view_model.ShootBulletZombie("up", (PictureBox)item, this);
+                        }
+                        if ((string)item.Tag == "shooter_down")
+                        {
+                            view_model.ShootBulletZombie("down", (PictureBox)item, this);
+                        }
+                    }
+                    if (item.Left < player.Left)
+                    {
+                        item.Left += view_model.zombieSpeed;
+                    }
+                    if (item.Left > player.Left)
+                    {
+                        item.Left -= view_model.zombieSpeed;
+                    }
+                }
+                if (item is PictureBox && ((string)item.Tag == "shooters_left_right_up_down"))
+                {
+                    if (item.Top < player.Top)
+                    {
+                        item.Top += view_model.zombieSpeed;
+                        ((PictureBox)item).Image = Properties.Resources.zdown;
+                        if ((time_shoot_zombie % 20) == 0)
+                        {
+                            view_model.ShootBulletZombie("right", (PictureBox)item, this);
+                        }
+                    }
+                    if (item.Top > player.Top)
+                    {
+                        item.Top -= view_model.zombieSpeed;
+                        ((PictureBox)item).Image = Properties.Resources.zup;
+                        if ((time_shoot_zombie % 20) == 0)
+                        {
+                            view_model.ShootBulletZombie("left", (PictureBox)item, this);
+                        }
+                    }
+                    if (item.Left < player.Left)
+                    {
+                        item.Left += view_model.zombieSpeed;
+                        ((PictureBox)item).Image = Properties.Resources.zright;
+                        if ((time_shoot_zombie % 20) == 0)
+                        {
+                            view_model.ShootBulletZombie("down", (PictureBox)item, this);
+                        }
+                    }
+                    if (item.Left > player.Left)
+                    {
+                        item.Left -= view_model.zombieSpeed;
+                        ((PictureBox)item).Image = Properties.Resources.zleft;
+                        if ((time_shoot_zombie % 20) == 0)
+                        {
+                            view_model.ShootBulletZombie("up", (PictureBox)item, this);
+                        }
+                    }
+                }
+
+                foreach (Control item_bullet in this.Controls)
+                {
+                    if (item_bullet is PictureBox && (string)item_bullet.Tag == "bullet" && item is PictureBox && (string)item.Tag == "zombie")
+                    {
+                        if (item.Bounds.IntersectsWith(item_bullet.Bounds))
                         {
                             view_model.player_class.score++;
-                            this.Controls.Remove(item2);
-                            ((PictureBox)item2).Dispose();
+                            this.Controls.Remove(item_bullet);
+                            ((PictureBox)item_bullet).Dispose();
                             this.Controls.Remove(item);
                             ((PictureBox)item).Dispose();
                             view_model.zombiesList.Remove(((PictureBox)item));
@@ -152,38 +233,151 @@ namespace Game_Kursak
                             {
                                 view_model.MakeZombiesShooter(player, this, Properties.Resources.zright, "shooter_right");
                             }
+                            if (view_model.player_class.score == 30)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zup, "shooter_up");
+                            }
+                            if (view_model.player_class.score == 40)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                            }
+                            if (view_model.player_class.score == 50)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                            }
                         }
                     }
                 }
-                foreach (Control item3 in this.Controls)
+
+                foreach (Control item_bullet_zombie in this.Controls)
                 {
-                    if (item3 is PictureBox && (string)item3.Tag == "bullet_zombie")
+                    if (item_bullet_zombie is PictureBox && (string)item_bullet_zombie.Tag == "bullet_zombie")
                     {
-                        if (player.Bounds.IntersectsWith(item3.Bounds))
+                        if (player.Bounds.IntersectsWith(item_bullet_zombie.Bounds))
                         {
-                            this.Controls.Remove(item3);
+                            this.Controls.Remove(item_bullet_zombie);
                             view_model.player_class.playerHealth -= 10;
                         }
                     }
                 }
-                foreach (Control item4 in this.Controls)
+
+                foreach (Control item_shooter_left in this.Controls)
                 {
-                    if (item is PictureBox && (string)item.Tag == "bullet" && item4 is PictureBox && ((string)item4.Tag == "shooter_left"|| (string)item4.Tag == "shooter_right"))
+                    if (item is PictureBox && (string)item.Tag == "bullet" && item_shooter_left is PictureBox && ((string)item_shooter_left.Tag == "shooter_left"))
                     {
-                        if (item4.Bounds.IntersectsWith(item.Bounds))
+                        if (item_shooter_left.Bounds.IntersectsWith(item.Bounds))
                         {
                             view_model.player_class.score++;
                             this.Controls.Remove(item);
                             ((PictureBox)item).Dispose();
-                            this.Controls.Remove(item4);
-                            ((PictureBox)item4).Dispose();
-                            view_model.zombiesList.Remove(((PictureBox)item4));
+                            this.Controls.Remove(item_shooter_left);
+                            ((PictureBox)item_shooter_left).Dispose();
+                            view_model.zombiesList.Remove(((PictureBox)item_shooter_left));
                             view_model.MakeZombiesShooter(player, this, Properties.Resources.zleft, "shooter_left");
                             if (view_model.player_class.score == 20)
                             {
                                 view_model.MakeZombiesShooter(player, this, Properties.Resources.zright, "shooter_right");
-
                             }
+                            if (view_model.player_class.score == 30)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zup, "shooter_up");
+                            }
+                            if (view_model.player_class.score == 40)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                            }
+                            if (view_model.player_class.score == 50)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                            }
+                        }
+                    }
+                }
+                foreach (Control item_shooter_right in this.Controls)
+                {
+                    if (item is PictureBox && (string)item.Tag == "bullet" && item_shooter_right is PictureBox && ((string)item_shooter_right.Tag == "shooter_right"))
+                    {
+                        if (item_shooter_right.Bounds.IntersectsWith(item.Bounds))
+                        {
+                            view_model.player_class.score++;
+                            this.Controls.Remove(item);
+                            ((PictureBox)item).Dispose();
+                            this.Controls.Remove(item_shooter_right);
+                            ((PictureBox)item_shooter_right).Dispose();
+                            view_model.zombiesList.Remove(((PictureBox)item_shooter_right));
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zright, "shooter_right");
+                            if (view_model.player_class.score == 30)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zup, "shooter_up");
+                            }
+                            if (view_model.player_class.score == 40)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                            }
+                            if (view_model.player_class.score == 50)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                            }
+                        }
+                    }
+                }
+                foreach (Control item_shooter_up in this.Controls)
+                {
+                    if (item is PictureBox && (string)item.Tag == "bullet" && item_shooter_up is PictureBox && ((string)item_shooter_up.Tag == "shooter_up"))
+                    {
+                        if (item_shooter_up.Bounds.IntersectsWith(item.Bounds))
+                        {
+                            view_model.player_class.score++;
+                            this.Controls.Remove(item);
+                            ((PictureBox)item).Dispose();
+                            this.Controls.Remove(item_shooter_up);
+                            ((PictureBox)item_shooter_up).Dispose();
+                            view_model.zombiesList.Remove(((PictureBox)item_shooter_up));
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zup, "shooter_up");
+                            if (view_model.player_class.score == 40)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                            }
+                            if (view_model.player_class.score == 50)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                            }
+                        }
+                    }
+                }
+                foreach (Control item_shooter_down in this.Controls)
+                {
+                    if (item is PictureBox && (string)item.Tag == "bullet" && item_shooter_down is PictureBox && ((string)item_shooter_down.Tag == "shooter_down"))
+                    {
+                        if (item_shooter_down.Bounds.IntersectsWith(item.Bounds))
+                        {
+                            view_model.player_class.score++;
+                            this.Controls.Remove(item);
+                            ((PictureBox)item).Dispose();
+                            this.Controls.Remove(item_shooter_down);
+                            ((PictureBox)item_shooter_down).Dispose();
+                            view_model.zombiesList.Remove(((PictureBox)item_shooter_down));
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                            if (view_model.player_class.score == 50)
+                            {
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                            }
+                        }
+                    }
+                }
+                foreach (Control item_shooter_shooters_left_right_up_down in this.Controls)
+                {
+                    if (item is PictureBox && (string)item.Tag == "bullet" && item_shooter_shooters_left_right_up_down is PictureBox && ((string)item_shooter_shooters_left_right_up_down.Tag == "shooters_left_right_up_down"))
+                    {
+                        if (item_shooter_shooters_left_right_up_down.Bounds.IntersectsWith(item.Bounds))
+                        {
+                            view_model.player_class.score++;
+                            this.Controls.Remove(item);
+                            ((PictureBox)item).Dispose();
+                            this.Controls.Remove(item_shooter_shooters_left_right_up_down);
+                            ((PictureBox)item_shooter_shooters_left_right_up_down).Dispose();
+                            view_model.zombiesList.Remove(((PictureBox)item_shooter_shooters_left_right_up_down));
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
                         }
                     }
                 }
@@ -251,8 +445,6 @@ namespace Game_Kursak
             {
                 view_model.player_class.ammo--;
                 view_model.ShootBullet(view_model.player_class.facing, player, this);
-                
-
                 if (view_model.player_class.ammo < 1)
                 {
                     view_model.DropAmmo(player, this);
@@ -261,13 +453,63 @@ namespace Game_Kursak
 
             if (e.KeyCode == Keys.Enter && view_model.player_class.gameOver == true)
             {
-                view_model.RestartGame(player, this, GameTimer);
+                view_model.RestartGame(player, this, GameTimer, TimeOfGame);
             }
         }
 
         private void Form_Deactivate(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void TimeOfGame_Tick(object sender, EventArgs e)
+        {
+            time_game_s++;
+            if (time_game_s == 30)
+            {
+                view_model.DropHP(player, this);
+            }
+            
+            if (time_game_s == 60)
+            {
+                time_game_s = 0;
+                time_game_m++;
+                view_model.DropHP(player, this);
+            }
+            if (time_game_m == 60)
+            {
+                time_game_m = 0;
+                time_game_h++;
+            }
+            if (time_game_s > 9)
+            {
+                txtTime.Text = "Time: 0" + time_game_h + ":0" + time_game_m + ":" + time_game_s;
+            }
+            else if (time_game_m>9)
+            {
+                txtTime.Text = "Time: 0" + time_game_h + ":" + time_game_m + ":0" + time_game_s;
+            }
+            else if (time_game_h > 9)
+            {
+                txtTime.Text = "Time: " + time_game_h + ":0" + time_game_m + ":0" + time_game_s;
+            }
+            else if (time_game_s > 9 && time_game_m > 9)
+            {
+                txtTime.Text = "Time: 0" + time_game_h + ":" + time_game_m + ":" + time_game_s;
+            }
+            else if (time_game_h > 9 && time_game_m > 9)
+            {
+                txtTime.Text = "Time: " + time_game_h + ":" + time_game_m + ":0" + time_game_s;
+            }
+            else if (time_game_s > 9 && time_game_m > 9 && time_game_h > 9)
+            {
+                txtTime.Text = "Time: " + time_game_h + ":" + time_game_m + ":" + time_game_s;
+            }
+            else
+            {
+                txtTime.Text = "Time: 0" + time_game_h + ":0" + time_game_m + ":0" + time_game_s;
+            }
+            
         }
     }
 }

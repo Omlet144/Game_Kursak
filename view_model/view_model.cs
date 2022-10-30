@@ -58,8 +58,8 @@ namespace Game_Kursak.view_model
             zombie_shooter.BackColor = Color.FromArgb(0, 0, 0, 0);
             zombie_shooter.Tag = tag;
             zombie_shooter.Image = facingResorce;
-            zombie_shooter.Left = randNum.Next(0, 850);
-            zombie_shooter.Top = randNum.Next(0, 700);
+            zombie_shooter.Left = randNum.Next(0, 800);
+            zombie_shooter.Top = randNum.Next(0, 600);
             zombie_shooter.SizeMode = PictureBoxSizeMode.AutoSize;
             zombiesList.Add(zombie_shooter);
             main.Controls.Add(zombie_shooter);
@@ -82,7 +82,21 @@ namespace Game_Kursak.view_model
             player.BringToFront();
         }
 
-        public void RestartGame(PictureBox player, Form main, Timer GameTimer)
+        public void DropHP(PictureBox player, Form main)
+        {
+            PictureBox helth = new PictureBox();
+            helth.Image = Properties.Resources.hp_Image;
+            helth.SizeMode = PictureBoxSizeMode.AutoSize;
+            helth.Left = randNum.Next(10, main.ClientSize.Width - helth.Width);
+            helth.Top = randNum.Next(60, main.ClientSize.Height - helth.Height);
+            helth.Tag = "hp";
+            main.Controls.Add(helth);
+            ammo_and_health.Add(helth);
+            helth.BringToFront();
+            player.BringToFront();
+        }
+
+        public void RestartGame(PictureBox player, Form main, Timer GameTimer, Timer TimeOfGame)
         {
             player.Image = Properties.Resources.up;
             
@@ -98,7 +112,7 @@ namespace Game_Kursak.view_model
             }
             ammo_and_health.Clear();
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 MakeZombies(player, main);
             }
@@ -114,6 +128,7 @@ namespace Game_Kursak.view_model
             player_class.ammo = 10;
 
             GameTimer.Start();
+            TimeOfGame.Start();
         }
     }
 }

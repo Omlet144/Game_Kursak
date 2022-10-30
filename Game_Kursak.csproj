@@ -159,5 +159,8 @@
   <ItemGroup>
     <None Include="bin\Debug\zombie-shooter-assets\bagraund_game.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\zombie-shooter-assets\hp_Image.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
