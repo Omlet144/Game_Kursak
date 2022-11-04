@@ -25,7 +25,7 @@ namespace Game_Kursak.view_model
             Bullet shootBullet = new Bullet();
             shootBullet.diraction = direction;
             shootBullet.bulletLeft = player.Left + (player.Width / 2);
-            shootBullet.bulletTop = player.Top + (player.Height / 2);
+            shootBullet.bulletTop = player.Top + (player.Height / 5);
             shootBullet.MakeBullet(main);
         }
 

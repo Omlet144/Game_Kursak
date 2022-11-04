@@ -95,6 +95,7 @@
             // 
             this.company.BackColor = System.Drawing.SystemColors.Desktop;
             this.company.BackgroundImage = global::Game_Kursak.Properties.Resources.kamuflyag;
+            this.company.Cursor = System.Windows.Forms.Cursors.PanNW;
             this.company.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
             this.company.FlatAppearance.BorderSize = 2;
             this.company.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -122,7 +123,7 @@
             this.Controls.Add(this.survival);
             this.Controls.Add(this.company);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormMenu";

@@ -36,7 +36,7 @@
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.player = new System.Windows.Forms.PictureBox();
             this.txtTime = new System.Windows.Forms.Label();
-            this.TimeOfGame = new System.Windows.Forms.Timer(this.components);
+            this.TimeOfGameUser = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,7 +96,7 @@
             this.player.Image = global::Game_Kursak.Properties.Resources.up;
             this.player.Location = new System.Drawing.Point(471, 420);
             this.player.Name = "player";
-            this.player.Size = new System.Drawing.Size(71, 100);
+            this.player.Size = new System.Drawing.Size(100, 71);
             this.player.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.player.TabIndex = 4;
             this.player.TabStop = false;
@@ -113,10 +113,10 @@
             this.txtTime.TabIndex = 5;
             this.txtTime.Text = "Time: 00:00:00";
             // 
-            // TimeOfGame
+            // TimeOfGameUser
             // 
-            this.TimeOfGame.Interval = 1000;
-            this.TimeOfGame.Tick += new System.EventHandler(this.TimeOfGame_Tick);
+            this.TimeOfGameUser.Interval = 1000;
+            this.TimeOfGameUser.Tick += new System.EventHandler(this.TimeOfGame_Tick);
             // 
             // Form_Game
             // 
@@ -131,6 +131,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtScore);
             this.Controls.Add(this.txtAmmo);
+            this.Cursor = System.Windows.Forms.Cursors.PanNW;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form_Game";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -154,7 +155,7 @@
         private System.Windows.Forms.PictureBox player;
         private System.Windows.Forms.Timer GameTimer;
         private System.Windows.Forms.Label txtTime;
-        private System.Windows.Forms.Timer TimeOfGame;
+        private System.Windows.Forms.Timer TimeOfGameUser;
     }
 }
 

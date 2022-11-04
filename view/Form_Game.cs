@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
+using Game_Kursak.view;
 
 namespace Game_Kursak
 {
     public partial class Form_Game : Form
     {
+        FormAfterDeathPlayer formAfterDeathPlayer = new FormAfterDeathPlayer();
+        FormMenu menuForm = new FormMenu();
         View_model view_model = new View_model();
         int time_shoot_zombie = 0;
         int time_game_s = 0;
@@ -22,7 +23,8 @@ namespace Game_Kursak
         public Form_Game()
         {
             InitializeComponent();
-            view_model.RestartGame(player, this, GameTimer, TimeOfGame);
+            view_model.RestartGame(player, this, GameTimer, TimeOfGameUser);
+            
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
@@ -38,7 +40,21 @@ namespace Game_Kursak
                 view_model.player_class.gameOver = true;
                 player.Image = Properties.Resources.dead;
                 GameTimer.Stop();
-                TimeOfGame.Stop();
+                TimeOfGameUser.Stop();
+
+                formAfterDeathPlayer.ShowDialog();
+                if (formAfterDeathPlayer.Btn == "restart")
+                {
+                    view_model.RestartGame(player, this, GameTimer, TimeOfGameUser);
+                    time_game_s = 0;
+                    time_game_m = 0;
+                    time_game_h = 0;
+                }
+                else if (formAfterDeathPlayer.Btn == "menu")
+                {
+                    this.Close();
+                    menuForm.Show();
+                }
             }
 
             txtAmmo.Text = "Ammo: " + view_model.player_class.ammo;
@@ -453,13 +469,20 @@ namespace Game_Kursak
 
             if (e.KeyCode == Keys.Enter && view_model.player_class.gameOver == true)
             {
-                view_model.RestartGame(player, this, GameTimer, TimeOfGame);
+                view_model.RestartGame(player, this, GameTimer, TimeOfGameUser);
+                time_game_s = 0;
+                time_game_m = 0;
+                time_game_h = 0;
             }
         }
 
         private void Form_Deactivate(object sender, EventArgs e)
         {
-            Application.Exit();
+           if (view_model.player_class.gameOver != true)
+           {
+                Application.Exit();
+           }
+            
         }
 
         private void TimeOfGame_Tick(object sender, EventArgs e)

@@ -29,6 +29,7 @@ namespace Game_Kursak.view
             this.Hide();
             Form_Game formGame = new Form_Game();
             formGame.Show();
+
         }
 
         private void button_exit_Click(object sender, EventArgs e)
