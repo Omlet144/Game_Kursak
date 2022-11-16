@@ -32,7 +32,7 @@
             this.restart = new System.Windows.Forms.Button();
             this.menu = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox_nickName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -104,17 +104,17 @@
             this.exit.UseVisualStyleBackColor = false;
             this.exit.Click += new System.EventHandler(this.exit_Click);
             // 
-            // textBox1
+            // textBox_nickName
             // 
-            this.textBox1.BackColor = System.Drawing.Color.DarkRed;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Font = new System.Drawing.Font("Chiller", 26.25F, System.Drawing.FontStyle.Bold);
-            this.textBox1.Location = new System.Drawing.Point(45, 44);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(268, 47);
-            this.textBox1.TabIndex = 9;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_nickName.BackColor = System.Drawing.Color.DarkRed;
+            this.textBox_nickName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_nickName.Font = new System.Drawing.Font("Chiller", 26.25F, System.Drawing.FontStyle.Bold);
+            this.textBox_nickName.Location = new System.Drawing.Point(45, 44);
+            this.textBox_nickName.Multiline = true;
+            this.textBox_nickName.Name = "textBox_nickName";
+            this.textBox_nickName.Size = new System.Drawing.Size(268, 47);
+            this.textBox_nickName.TabIndex = 9;
+            this.textBox_nickName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label1
             // 
@@ -135,7 +135,7 @@
             this.BackgroundImage = global::Game_Kursak.Properties.Resources.bagraund_menu;
             this.ClientSize = new System.Drawing.Size(356, 342);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox_nickName);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.menu);
             this.Controls.Add(this.restart);
@@ -156,7 +156,7 @@
         private System.Windows.Forms.Button restart;
         private System.Windows.Forms.Button menu;
         private System.Windows.Forms.Button exit;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_nickName;
         private System.Windows.Forms.Label label1;
     }
 }

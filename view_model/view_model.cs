@@ -11,11 +11,13 @@ namespace Game_Kursak.view_model
 {
     internal class View_model
     {
+        
         public Player player_class = new Player("up", 100, 10, 10);
         public int zombieSpeed = 3;
         public Random randNum = new Random();
         public List<PictureBox> zombiesList = new List<PictureBox>();
         public List<PictureBox> ammo_and_health = new List<PictureBox>();
+        public List<SaveResult> results = new List<SaveResult>();
         public Player z = new Player("up", 100, 10, 10);
 
 
@@ -129,6 +131,12 @@ namespace Game_Kursak.view_model
 
             GameTimer.Start();
             TimeOfGame.Start();
+        }
+
+        public void SaveResultPlayer(string nickName, int kills, int ammo_picked_up, int fired_bullets, int med_kit_picked_up, int hP_replenishment_amount, string game_time)
+        {
+            SaveResult saveResult = new SaveResult(nickName, kills, ammo_picked_up, fired_bullets, med_kit_picked_up, hP_replenishment_amount, game_time);
+            results.Add(saveResult);
         }
     }
 }

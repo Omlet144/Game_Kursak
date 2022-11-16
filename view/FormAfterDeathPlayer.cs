@@ -15,7 +15,8 @@ namespace Game_Kursak.view
     public partial class FormAfterDeathPlayer : Form
     {
         public string Btn = "";
-        
+        public string NickNameOfPlayer = "";
+
         public FormAfterDeathPlayer()
         {
             InitializeComponent();
@@ -40,7 +41,9 @@ namespace Game_Kursak.view
 
         private void save_Click(object sender, EventArgs e)
         {
-
+            Btn = "save";
+            NickNameOfPlayer = textBox_nickName.Text;
+            this.Close();
         }
     }
 }

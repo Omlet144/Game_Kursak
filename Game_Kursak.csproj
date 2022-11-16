@@ -64,6 +64,7 @@
     <Compile Include="model\Bullet.cs" />
     <Compile Include="model\Bullet_Zombie.cs" />
     <Compile Include="model\Player.cs" />
+    <Compile Include="model\SaveResult.cs" />
     <Compile Include="view\FormAfterDeathPlayer.cs">
       <SubType>Form</SubType>
     </Compile>

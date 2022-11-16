@@ -15,7 +15,13 @@ namespace Game_Kursak
         FormAfterDeathPlayer formAfterDeathPlayer = new FormAfterDeathPlayer();
         FormMenu menuForm = new FormMenu();
         View_model view_model = new View_model();
+
+        int ammo_piced_up = 0;
+        int fired_bullets = 0;
+        int med_kit_picked_up = 0;
+
         int time_shoot_zombie = 0;
+
         int time_game_s = 0;
         int time_game_m = 0;
         int time_game_h = 0;
@@ -55,6 +61,13 @@ namespace Game_Kursak
                     this.Close();
                     menuForm.Show();
                 }
+                else if (formAfterDeathPlayer.Btn == "save")
+                {
+                    view_model.SaveResultPlayer(formAfterDeathPlayer.NickNameOfPlayer, view_model.player_class.score, 
+                        ammo_piced_up, fired_bullets, med_kit_picked_up, med_kit_picked_up*30, txtTime.Text);
+                    this.Close();
+                    menuForm.Show();
+                }
             }
 
             txtAmmo.Text = "Ammo: " + view_model.player_class.ammo;
@@ -87,6 +100,7 @@ namespace Game_Kursak
                         this.Controls.Remove(item);
                         ((PictureBox)item).Dispose();
                         view_model.player_class.ammo += 5;
+                        ammo_piced_up++;
                     }
                 }
                 if (item is PictureBox && (string)item.Tag == "hp")
@@ -104,6 +118,7 @@ namespace Game_Kursak
                             ((PictureBox)item).Dispose();
                             if (view_model.player_class.playerHealth < 100)
                             {
+                                med_kit_picked_up++;
                                 view_model.player_class.playerHealth += 30;
                                 if (view_model.player_class.playerHealth > 100)
                                 {
@@ -461,6 +476,7 @@ namespace Game_Kursak
             {
                 view_model.player_class.ammo--;
                 view_model.ShootBullet(view_model.player_class.facing, player, this);
+                fired_bullets++;
                 if (view_model.player_class.ammo < 1)
                 {
                     view_model.DropAmmo(player, this);
