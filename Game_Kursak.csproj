@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="model\Bullet.cs" />
     <Compile Include="model\Bullet_Zombie.cs" />
+    <Compile Include="model\Client.cs" />
     <Compile Include="model\Player.cs" />
     <Compile Include="model\SaveResult.cs" />
     <Compile Include="view\FormAfterDeathPlayer.cs">
@@ -70,6 +71,12 @@
     </Compile>
     <Compile Include="view\FormAfterDeathPlayer.Designer.cs">
       <DependentUpon>FormAfterDeathPlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="view\FormStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\FormStatistics.Designer.cs">
+      <DependentUpon>FormStatistics.cs</DependentUpon>
     </Compile>
     <Compile Include="view\Form_Game.cs">
       <SubType>Form</SubType>
@@ -98,6 +105,9 @@
     </Compile>
     <EmbeddedResource Include="view\FormAfterDeathPlayer.resx">
       <DependentUpon>FormAfterDeathPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\FormStatistics.resx">
+      <DependentUpon>FormStatistics.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="view\Form_Game.resx">
       <DependentUpon>Form_Game.cs</DependentUpon>

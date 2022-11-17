@@ -1,13 +1,4 @@
-﻿using Game_Kursak.model;
-using Game_Kursak.view_model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Game_Kursak.view

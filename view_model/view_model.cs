@@ -2,16 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Game_Kursak.view_model
 {
     internal class View_model
     {
-        
+        Client client = new Client();
         public Player player_class = new Player("up", 100, 10, 10);
         public int zombieSpeed = 3;
         public Random randNum = new Random();
@@ -137,6 +134,11 @@ namespace Game_Kursak.view_model
         {
             SaveResult saveResult = new SaveResult(nickName, kills, ammo_picked_up, fired_bullets, med_kit_picked_up, hP_replenishment_amount, game_time);
             results.Add(saveResult);
+        }
+
+        public void SendToServer()
+        {
+            client.Work("Hello!");
         }
     }
 }

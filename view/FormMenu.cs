@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Game_Kursak.view
@@ -35,6 +28,13 @@ namespace Game_Kursak.view
         private void button_exit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void statistics_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormStatistics form_statistics = new FormStatistics();
+            form_statistics.Show();
         }
     }
 }

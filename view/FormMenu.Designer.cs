@@ -75,6 +75,7 @@
             this.statistics.TabIndex = 2;
             this.statistics.Text = "Statistics";
             this.statistics.UseVisualStyleBackColor = true;
+            this.statistics.Click += new System.EventHandler(this.statistics_Click);
             // 
             // survival
             // 
