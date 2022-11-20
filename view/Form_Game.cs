@@ -2,6 +2,8 @@
 using System;
 using System.Windows.Forms;
 using Game_Kursak.view;
+using Game_Kursak.model;
+using System.Collections.Generic;
 
 namespace Game_Kursak
 {
@@ -10,6 +12,7 @@ namespace Game_Kursak
         FormAfterDeathPlayer formAfterDeathPlayer = new FormAfterDeathPlayer();
         FormMenu menuForm = new FormMenu();
         View_model view_model = new View_model();
+        public List<SaveResult> list_result = new List<SaveResult>();
 
         int ammo_piced_up = 0;
         int fired_bullets = 0;
@@ -59,8 +62,9 @@ namespace Game_Kursak
                 else if (formAfterDeathPlayer.Btn == "save")
                 {
                     view_model.SaveResultPlayer(formAfterDeathPlayer.NickNameOfPlayer, view_model.player_class.score, 
-                        ammo_piced_up, fired_bullets, med_kit_picked_up, med_kit_picked_up*30, txtTime.Text);
+                        ammo_piced_up, fired_bullets, med_kit_picked_up, med_kit_picked_up*30, txtTime.Text, list_result);
                     this.Close();
+                    menuForm.list_result_menu = list_result;
                     menuForm.Show();
                 }
             }

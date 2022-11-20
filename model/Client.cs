@@ -27,7 +27,7 @@ namespace Game_Kursak.model
                 client.Connect(HOST, PORT);
                 stream = client.GetStream();
 
-                byte[] buffer = Encoding.Unicode.GetBytes(userName);
+                byte[] buffer = Encoding.Unicode.GetBytes(userName+"\t");
                 stream.Write(buffer, 0, buffer.Length);
 
                 Thread receiveMsgThread = new Thread(ReceiveMsg);

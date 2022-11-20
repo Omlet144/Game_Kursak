@@ -1,8 +1,11 @@
 ﻿using Game_Kursak.model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace Game_Kursak.view_model
 {
@@ -14,7 +17,6 @@ namespace Game_Kursak.view_model
         public Random randNum = new Random();
         public List<PictureBox> zombiesList = new List<PictureBox>();
         public List<PictureBox> ammo_and_health = new List<PictureBox>();
-        public List<SaveResult> results = new List<SaveResult>();
         public Player z = new Player("up", 100, 10, 10);
 
 
@@ -130,15 +132,16 @@ namespace Game_Kursak.view_model
             TimeOfGame.Start();
         }
 
-        public void SaveResultPlayer(string nickName, int kills, int ammo_picked_up, int fired_bullets, int med_kit_picked_up, int hP_replenishment_amount, string game_time)
+        public void SaveResultPlayer(string nickName, int kills, int ammo_picked_up, int fired_bullets, int med_kit_picked_up, int hP_replenishment_amount, string game_time, List<SaveResult> results)
         {
             SaveResult saveResult = new SaveResult(nickName, kills, ammo_picked_up, fired_bullets, med_kit_picked_up, hP_replenishment_amount, game_time);
             results.Add(saveResult);
         }
 
-        public void SendToServer()
+        public void SendToServer(List<SaveResult> results)
         {
-            client.Work("Hello!");
+            string json = JsonConvert.SerializeObject(results, Formatting.Indented);
+            client.Work(json);
         }
     }
 }

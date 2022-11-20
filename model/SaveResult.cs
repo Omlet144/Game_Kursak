@@ -1,7 +1,7 @@
 ﻿
 namespace Game_Kursak.model
 {
-    internal class SaveResult
+    public class SaveResult
     {
         public string NickName { get; set; }
         public int Kills { get; set; }

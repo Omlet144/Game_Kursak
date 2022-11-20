@@ -1,12 +1,7 @@
-﻿using Game_Kursak.view_model;
+﻿using Game_Kursak.model;
+using Game_Kursak.view_model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Game_Kursak.view
@@ -14,6 +9,7 @@ namespace Game_Kursak.view
     public partial class FormStatistics : Form
     {
         View_model view_model = new View_model();
+        public List<SaveResult> list_result_statistics = new List<SaveResult>();
 
         public FormStatistics()
         {
@@ -22,7 +18,7 @@ namespace Game_Kursak.view
 
         private void button1_Click(object sender, EventArgs e)
         {
-            view_model.SendToServer();
+            view_model.SendToServer(list_result_statistics);
         }
     }
 }

@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Game_Kursak.model;
+using Game_Kursak.view_model;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Game_Kursak.view
 {
     public partial class FormMenu : Form
     {
+        public List<SaveResult> list_result_menu = new List<SaveResult>();
+
         public FormMenu()
         {
             InitializeComponent();
@@ -34,6 +39,7 @@ namespace Game_Kursak.view
         {
             this.Hide();
             FormStatistics form_statistics = new FormStatistics();
+            form_statistics.list_result_statistics = list_result_menu;
             form_statistics.Show();
         }
     }
