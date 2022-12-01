@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 using Formatting = Newtonsoft.Json.Formatting;
 
 namespace Game_Kursak.view_model
@@ -140,8 +142,108 @@ namespace Game_Kursak.view_model
 
         public void SendToServer(List<SaveResult> results)
         {
-            string json = JsonConvert.SerializeObject(results, Formatting.Indented);
+            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults.json";
+            string json = null;
+            string[] readText = File.ReadAllLines(path);
+            foreach (string str in readText)
+            {
+                json += str;
+            }
+            
+            results = JsonConvert.DeserializeObject<List<SaveResult>>(json);
+            results.Sort((x, y) => y.client_Kills.CompareTo(x.client_Kills));
+            json = JsonConvert.SerializeObject(results.Take(1), Formatting.Indented);
             client.Work(json);
+        }
+
+        public void SaveToTxt(List<SaveResult> results)
+        {
+            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults.json";
+            string json = null;
+            bool flag = true;
+
+            try
+            {
+                string[] readText = File.ReadAllLines(path);
+                foreach (string str in readText)
+                {
+                    json += str;
+                }
+
+                List<SaveResult>  list_result_statistics = JsonConvert.DeserializeObject<List<SaveResult>>(json);
+
+                foreach (var item in list_result_statistics)
+                {
+                    if (item.client_NickName == results[0].client_NickName)
+                    {
+                        if (item.client_Kills < results[0].client_Kills)
+                        {
+                            item.client_Kills = results[0].client_Kills;
+                            item.client_Ammo_picked_up = results[0].client_Ammo_picked_up;
+                            item.client_Fired_bullets = results[0].client_Fired_bullets;
+                            item.client_Med_kit_picked_up = results[0].client_Med_kit_picked_up;
+                            item.client_HP_replenishment_amount = results[0].client_HP_replenishment_amount;
+                            item.client_Game_time = results[0].client_Game_time;
+                        }
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag == true)
+                {
+                    var resQuery = results.Union(list_result_statistics);
+                    json = JsonConvert.SerializeObject(resQuery, Formatting.Indented);
+                }
+                else
+                {
+                    json = JsonConvert.SerializeObject(list_result_statistics);
+                }
+
+                // Create the file, or overwrite if the file exists.
+                using (FileStream fs = File.Create(path))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes(json);
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void OpenFromTxt(List<SaveResult> list_result_statistics, DataGridView dataGridView_local_results)
+        {
+            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults.json";
+            string json = null;
+            try
+            {
+                string[] readText = File.ReadAllLines(path);
+                foreach (string str in readText)
+                {
+                    json += str; 
+                }
+
+                list_result_statistics = JsonConvert.DeserializeObject<List<SaveResult>>(json);
+                list_result_statistics.Sort((x, y) => y.client_Kills.CompareTo(x.client_Kills)); 
+                dataGridView_local_results.DataSource = list_result_statistics;
+                for (int i = 0; i < dataGridView_local_results.RowCount; i++)
+                {
+                    dataGridView_local_results.Rows[i].ReadOnly = true;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                dataGridView_local_results.DataSource = list_result_statistics;
+                for (int i = 0; i < dataGridView_local_results.RowCount; i++)
+                {
+                    dataGridView_local_results.Rows[i].ReadOnly = true;
+                }
+            }
         }
     }
 }

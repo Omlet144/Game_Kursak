@@ -63,6 +63,7 @@ namespace Game_Kursak
                 {
                     view_model.SaveResultPlayer(formAfterDeathPlayer.NickNameOfPlayer, view_model.player_class.score, 
                         ammo_piced_up, fired_bullets, med_kit_picked_up, med_kit_picked_up*30, txtTime.Text, list_result);
+                    view_model.SaveToTxt(list_result);
                     this.Close();
                     menuForm.list_result_menu = list_result;
                     menuForm.Show();

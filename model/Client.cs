@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Game_Kursak.model
@@ -15,13 +11,16 @@ namespace Game_Kursak.model
         static TcpClient client = new TcpClient();
         static NetworkStream stream = null;
 
+
         string userName = Environment.UserName;
+        
 
         const int PORT = 8008;
         const string HOST = "127.0.0.1";
 
         public void Work(string msg)
         {
+
             try
             {
                 client.Connect(HOST, PORT);

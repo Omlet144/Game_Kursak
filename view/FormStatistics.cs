@@ -20,5 +20,17 @@ namespace Game_Kursak.view
         {
             view_model.SendToServer(list_result_statistics);
         }
+
+        private void button_Back_to_Menu_Click(object sender, EventArgs e)
+        {
+            FormMenu formMenu = new FormMenu();
+            formMenu.Show();
+            this.Close();
+        }
+
+        private void FormStatistics_Load(object sender, EventArgs e)
+        {
+            view_model.OpenFromTxt(list_result_statistics, dataGridView_local_results);
+        }
     }
 }
