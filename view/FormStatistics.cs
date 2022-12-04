@@ -10,15 +10,18 @@ namespace Game_Kursak.view
     {
         View_model view_model = new View_model();
         public List<SaveResult> list_result_statistics = new List<SaveResult>();
+       
 
         public FormStatistics()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonRefrash_Click(object sender, EventArgs e)
         {
-            view_model.SendToServer(list_result_statistics);
+            button_Refresh.Enabled = false;
+            view_model.SendToServer(list_result_statistics, dataGridView_network_results);
+            view_model.OpenFromTxt2(dataGridView_network_results);
         }
 
         private void button_Back_to_Menu_Click(object sender, EventArgs e)
@@ -31,6 +34,8 @@ namespace Game_Kursak.view
         private void FormStatistics_Load(object sender, EventArgs e)
         {
             view_model.OpenFromTxt(list_result_statistics, dataGridView_local_results);
+            view_model.OpenFromTxt2(dataGridView_network_results);
+
         }
     }
 }

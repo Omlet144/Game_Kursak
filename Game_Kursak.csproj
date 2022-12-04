@@ -68,6 +68,7 @@
     <Compile Include="model\Bullet_Zombie.cs" />
     <Compile Include="model\Client.cs" />
     <Compile Include="model\Player.cs" />
+    <Compile Include="model\Player_statistics_for_client.cs" />
     <Compile Include="model\SaveResult.cs" />
     <Compile Include="view\FormAfterDeathPlayer.cs">
       <SubType>Form</SubType>

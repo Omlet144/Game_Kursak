@@ -140,9 +140,9 @@ namespace Game_Kursak.view_model
             results.Add(saveResult);
         }
 
-        public void SendToServer(List<SaveResult> results)
+        public void SendToServer(List<SaveResult> results, DataGridView dataGridView)
         {
-            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults.json";
+            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults1.json";
             string json = null;
             string[] readText = File.ReadAllLines(path);
             foreach (string str in readText)
@@ -153,12 +153,15 @@ namespace Game_Kursak.view_model
             results = JsonConvert.DeserializeObject<List<SaveResult>>(json);
             results.Sort((x, y) => y.client_Kills.CompareTo(x.client_Kills));
             json = JsonConvert.SerializeObject(results.Take(1), Formatting.Indented);
-            client.Work(json);
+            client.Work(json, dataGridView);
+            
+           
+
         }
 
         public void SaveToTxt(List<SaveResult> results)
         {
-            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults.json";
+            string path = $@"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults1.json";
             string json = null;
             bool flag = true;
 
@@ -216,7 +219,7 @@ namespace Game_Kursak.view_model
 
         public void OpenFromTxt(List<SaveResult> list_result_statistics, DataGridView dataGridView_local_results)
         {
-            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults.json";
+            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults1.json";
             string json = null;
             try
             {
@@ -245,5 +248,33 @@ namespace Game_Kursak.view_model
                 }
             }
         }
+
+        public void OpenFromTxt2(DataGridView dataGridView_local_results)
+        {
+            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults2.json";
+            string json = null;
+            List<Player_statistics_for_client> list_result_statistics = new List<Player_statistics_for_client>();
+            try
+            {
+                string[] readText = File.ReadAllLines(path);
+                foreach (string str in readText)
+                {
+                    json += str;
+                }
+
+                list_result_statistics = JsonConvert.DeserializeObject<List<Player_statistics_for_client>>(json);
+                dataGridView_local_results.DataSource = list_result_statistics;
+                for (int i = 0; i < dataGridView_local_results.RowCount; i++)
+                {
+                    dataGridView_local_results.Rows[i].ReadOnly = true;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
     }
 }

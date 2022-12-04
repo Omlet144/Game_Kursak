@@ -46,7 +46,7 @@
             this.button_Refresh.TabIndex = 0;
             this.button_Refresh.Text = "Refresh";
             this.button_Refresh.UseVisualStyleBackColor = true;
-            this.button_Refresh.Click += new System.EventHandler(this.button1_Click);
+            this.button_Refresh.Click += new System.EventHandler(this.buttonRefrash_Click);
             // 
             // dataGridView_local_results
             // 
