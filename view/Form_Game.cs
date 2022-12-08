@@ -1,4 +1,4 @@
-﻿using Game_Kursak.view_model;
+﻿using Game_Kursak.controller;
 using System;
 using System.Windows.Forms;
 using Game_Kursak.view;
@@ -11,8 +11,9 @@ namespace Game_Kursak
     {
         FormAfterDeathPlayer formAfterDeathPlayer = new FormAfterDeathPlayer();
         FormMenu menuForm = new FormMenu();
-        View_model view_model = new View_model();
+        Controller view_model = new Controller();
         public List<SaveResult> list_result = new List<SaveResult>();
+        const int HP = 100;
 
         int ammo_piced_up = 0;
         int fired_bullets = 0;
@@ -208,7 +209,7 @@ namespace Game_Kursak
                     if (item.Top < player.Top)
                     {
                         item.Top += view_model.zombieSpeed;
-                        ((PictureBox)item).Image = Properties.Resources.zdown;
+                        ((PictureBox)item).Image = Properties.Resources.shooters_left_right_up_down;
                         if ((time_shoot_zombie % 20) == 0)
                         {
                             view_model.ShootBulletZombie("right", (PictureBox)item, this);
@@ -217,7 +218,7 @@ namespace Game_Kursak
                     if (item.Top > player.Top)
                     {
                         item.Top -= view_model.zombieSpeed;
-                        ((PictureBox)item).Image = Properties.Resources.zup;
+                        ((PictureBox)item).Image = Properties.Resources.shooters_left_right_up_down;
                         if ((time_shoot_zombie % 20) == 0)
                         {
                             view_model.ShootBulletZombie("left", (PictureBox)item, this);
@@ -226,7 +227,7 @@ namespace Game_Kursak
                     if (item.Left < player.Left)
                     {
                         item.Left += view_model.zombieSpeed;
-                        ((PictureBox)item).Image = Properties.Resources.zright;
+                        ((PictureBox)item).Image = Properties.Resources.shooters_left_right_up_down;
                         if ((time_shoot_zombie % 20) == 0)
                         {
                             view_model.ShootBulletZombie("down", (PictureBox)item, this);
@@ -235,7 +236,7 @@ namespace Game_Kursak
                     if (item.Left > player.Left)
                     {
                         item.Left -= view_model.zombieSpeed;
-                        ((PictureBox)item).Image = Properties.Resources.zleft;
+                        ((PictureBox)item).Image = Properties.Resources.shooters_left_right_up_down;
                         if ((time_shoot_zombie % 20) == 0)
                         {
                             view_model.ShootBulletZombie("up", (PictureBox)item, this);
@@ -258,23 +259,23 @@ namespace Game_Kursak
                             view_model.MakeZombies(player, this);
                             if (view_model.player_class.score == 10)
                             {
-                                view_model.MakeZombiesShooter(player,  this, Properties.Resources.zleft, "shooter_left");
+                                view_model.MakeZombiesShooter(player,  this, Properties.Resources.shooter_left, "shooter_left");
                             }
                             if (view_model.player_class.score == 20)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zright, "shooter_right");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_right, "shooter_right");
                             }
                             if (view_model.player_class.score == 30)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zup, "shooter_up");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_up, "shooter_up");
                             }
                             if (view_model.player_class.score == 40)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_down, "shooter_down");
                             }
                             if (view_model.player_class.score == 50)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooters_left_right_up_down, "shooters_left_right_up_down");
                             }
                         }
                     }
@@ -304,22 +305,22 @@ namespace Game_Kursak
                             this.Controls.Remove(item_shooter_left);
                             ((PictureBox)item_shooter_left).Dispose();
                             view_model.zombiesList.Remove(((PictureBox)item_shooter_left));
-                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zleft, "shooter_left");
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_left, "shooter_left");
                             if (view_model.player_class.score == 20)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zright, "shooter_right");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_right, "shooter_right");
                             }
                             if (view_model.player_class.score == 30)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zup, "shooter_up");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_up, "shooter_up");
                             }
                             if (view_model.player_class.score == 40)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_down, "shooter_down");
                             }
                             if (view_model.player_class.score == 50)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooters_left_right_up_down, "shooters_left_right_up_down");
                             }
                         }
                     }
@@ -336,18 +337,18 @@ namespace Game_Kursak
                             this.Controls.Remove(item_shooter_right);
                             ((PictureBox)item_shooter_right).Dispose();
                             view_model.zombiesList.Remove(((PictureBox)item_shooter_right));
-                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zright, "shooter_right");
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_right, "shooter_right");
                             if (view_model.player_class.score == 30)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zup, "shooter_up");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_up, "shooter_up");
                             }
                             if (view_model.player_class.score == 40)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_down, "shooter_down");
                             }
                             if (view_model.player_class.score == 50)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooters_left_right_up_down, "shooters_left_right_up_down");
                             }
                         }
                     }
@@ -364,14 +365,14 @@ namespace Game_Kursak
                             this.Controls.Remove(item_shooter_up);
                             ((PictureBox)item_shooter_up).Dispose();
                             view_model.zombiesList.Remove(((PictureBox)item_shooter_up));
-                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zup, "shooter_up");
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_up, "shooter_up");
                             if (view_model.player_class.score == 40)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_down, "shooter_down");
                             }
                             if (view_model.player_class.score == 50)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooters_left_right_up_down, "shooters_left_right_up_down");
                             }
                         }
                     }
@@ -388,10 +389,10 @@ namespace Game_Kursak
                             this.Controls.Remove(item_shooter_down);
                             ((PictureBox)item_shooter_down).Dispose();
                             view_model.zombiesList.Remove(((PictureBox)item_shooter_down));
-                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooter_down");
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.shooter_down, "shooter_down");
                             if (view_model.player_class.score == 50)
                             {
-                                view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                                view_model.MakeZombiesShooter(player, this, Properties.Resources.shooters_left_right_up_down, "shooters_left_right_up_down");
                             }
                         }
                     }
@@ -408,7 +409,7 @@ namespace Game_Kursak
                             this.Controls.Remove(item_shooter_shooters_left_right_up_down);
                             ((PictureBox)item_shooter_shooters_left_right_up_down).Dispose();
                             view_model.zombiesList.Remove(((PictureBox)item_shooter_shooters_left_right_up_down));
-                            view_model.MakeZombiesShooter(player, this, Properties.Resources.zdown, "shooters_left_right_up_down");
+                            view_model.MakeZombiesShooter(player, this, Properties.Resources.shooters_left_right_up_down, "shooters_left_right_up_down");
                         }
                     }
                 }

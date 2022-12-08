@@ -1,7 +1,9 @@
 ﻿using Game_Kursak.model;
 using Newtonsoft.Json;
+using SuperSimpleTcp;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -9,11 +11,12 @@ using System.Text;
 using System.Windows.Forms;
 using Formatting = Newtonsoft.Json.Formatting;
 
-namespace Game_Kursak.view_model
+namespace Game_Kursak.controller
 {
-    internal class View_model
+    internal class Controller
     {
-        Client client = new Client();
+        public SimpleTcpClient client;
+        public Client client_parametrs = new Client();
         public Player player_class = new Player("up", 100, 10, 10);
         public int zombieSpeed = 3;
         public Random randNum = new Random();
@@ -134,29 +137,12 @@ namespace Game_Kursak.view_model
             TimeOfGame.Start();
         }
 
+
+
         public void SaveResultPlayer(string nickName, int kills, int ammo_picked_up, int fired_bullets, int med_kit_picked_up, int hP_replenishment_amount, string game_time, List<SaveResult> results)
         {
             SaveResult saveResult = new SaveResult(nickName, kills, ammo_picked_up, fired_bullets, med_kit_picked_up, hP_replenishment_amount, game_time);
             results.Add(saveResult);
-        }
-
-        public void SendToServer(List<SaveResult> results, DataGridView dataGridView)
-        {
-            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults1.json";
-            string json = null;
-            string[] readText = File.ReadAllLines(path);
-            foreach (string str in readText)
-            {
-                json += str;
-            }
-            
-            results = JsonConvert.DeserializeObject<List<SaveResult>>(json);
-            results.Sort((x, y) => y.client_Kills.CompareTo(x.client_Kills));
-            json = JsonConvert.SerializeObject(results.Take(1), Formatting.Indented);
-            client.Work(json, dataGridView);
-            
-           
-
         }
 
         public void SaveToTxt(List<SaveResult> results)
@@ -172,6 +158,7 @@ namespace Game_Kursak.view_model
                 {
                     json += str;
                 }
+
 
                 List<SaveResult>  list_result_statistics = JsonConvert.DeserializeObject<List<SaveResult>>(json);
 
@@ -213,11 +200,18 @@ namespace Game_Kursak.view_model
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
+                json = JsonConvert.SerializeObject(results, Formatting.Indented);
+                using (FileStream fs = File.Create(path))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes(json);
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
+                }
             }
         }
 
-        public void OpenFromTxt(List<SaveResult> list_result_statistics, DataGridView dataGridView_local_results)
+        public void OpenFromTxtLocalResults(List<SaveResult> list_result_statistics, DataGridView dataGridView_local_results)
         {
             string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults1.json";
             string json = null;
@@ -230,8 +224,24 @@ namespace Game_Kursak.view_model
                 }
 
                 list_result_statistics = JsonConvert.DeserializeObject<List<SaveResult>>(json);
-                list_result_statistics.Sort((x, y) => y.client_Kills.CompareTo(x.client_Kills)); 
-                dataGridView_local_results.DataSource = list_result_statistics;
+                list_result_statistics.Sort((x, y) => y.client_Kills.CompareTo(x.client_Kills));
+
+                DataTable dt = new DataTable();
+
+                dt.Columns.Add("Nick name", typeof(string));
+                dt.Columns.Add("Kills", typeof(int));
+                dt.Columns.Add("Ammo picked up", typeof(int));
+                dt.Columns.Add("Fired bullets", typeof(int));
+                dt.Columns.Add("Med kit picked up", typeof(int));
+                dt.Columns.Add("HP replenishment amount", typeof(int));
+                dt.Columns.Add("Game time", typeof(string));
+
+                foreach (var item in list_result_statistics)
+                {
+                    dt.Rows.Add(item.client_NickName, item.client_Kills, item.client_Ammo_picked_up, item.client_Fired_bullets, item.client_Med_kit_picked_up,
+                        item.client_HP_replenishment_amount, item.client_Game_time);
+                }
+                dataGridView_local_results.DataSource = dt;
                 for (int i = 0; i < dataGridView_local_results.RowCount; i++)
                 {
                     dataGridView_local_results.Rows[i].ReadOnly = true;
@@ -240,7 +250,7 @@ namespace Game_Kursak.view_model
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
                 dataGridView_local_results.DataSource = list_result_statistics;
                 for (int i = 0; i < dataGridView_local_results.RowCount; i++)
                 {
@@ -249,31 +259,80 @@ namespace Game_Kursak.view_model
             }
         }
 
-        public void OpenFromTxt2(DataGridView dataGridView_local_results)
+        public string ConverResultsToJson(List<SaveResult> results)
         {
-            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults2.json";
+            string path = @"C:\Users\Alex\source\repos\Omlet144\Game_Kursak\bin\Debug\MyResults1.json";
             string json = null;
-            List<Player_statistics_for_client> list_result_statistics = new List<Player_statistics_for_client>();
-            try
+            string[] readText = File.ReadAllLines(path);
+            foreach (string str in readText)
             {
-                string[] readText = File.ReadAllLines(path);
-                foreach (string str in readText)
-                {
-                    json += str;
-                }
-
-                list_result_statistics = JsonConvert.DeserializeObject<List<Player_statistics_for_client>>(json);
-                dataGridView_local_results.DataSource = list_result_statistics;
-                for (int i = 0; i < dataGridView_local_results.RowCount; i++)
-                {
-                    dataGridView_local_results.Rows[i].ReadOnly = true;
-                }
+                json += str;
             }
 
-            catch (Exception ex)
+            results = JsonConvert.DeserializeObject<List<SaveResult>>(json);
+            results.Sort((x, y) => y.client_Kills.CompareTo(x.client_Kills));
+            json = JsonConvert.SerializeObject(results.Take(1), Formatting.Indented);
+
+            List<Player_statistics_for_client> player_Statistics_For_Clients = new List<Player_statistics_for_client>();
+            List<SaveResult> new_results = new List<SaveResult>();
+            new_results = JsonConvert.DeserializeObject<List<SaveResult>>(json);
+
+            foreach (var item in new_results)
             {
-                MessageBox.Show(ex.Message);
+                player_Statistics_For_Clients.Add(new Player_statistics_for_client
+                (
+                    client_parametrs.userName,
+                    client_parametrs.GetIpAddress(),
+                    item.client_NickName,
+                    item.client_Kills,
+                    item.client_Ammo_picked_up,
+                    item.client_Fired_bullets,
+                    item.client_Med_kit_picked_up,
+                    item.client_HP_replenishment_amount,
+                    item.client_Game_time
+                ));
             }
+            json = JsonConvert.SerializeObject(player_Statistics_For_Clients, Formatting.Indented);
+            return json;
+        }
+
+        public void ConverJsonToResults(string json, DataGridView dataGridView)
+        {
+            List<Player_statistics_for_client> player_Statistics_For_Clients = new List<Player_statistics_for_client>();
+            player_Statistics_For_Clients = JsonConvert.DeserializeObject<List<Player_statistics_for_client>>(json);
+
+            DataTable dt_Player_statistics = new DataTable();
+            dt_Player_statistics.Columns.Add("Name PC", typeof(string));
+            dt_Player_statistics.Columns.Add("IP adress", typeof(string));
+            dt_Player_statistics.Columns.Add("Nick name", typeof(string));
+            dt_Player_statistics.Columns.Add("Kills", typeof(int));
+            dt_Player_statistics.Columns.Add("Ammo picked up", typeof(int));
+            dt_Player_statistics.Columns.Add("Fired bullets", typeof(int));
+            dt_Player_statistics.Columns.Add("Med kit picked up", typeof(int));
+            dt_Player_statistics.Columns.Add("HP replenishment amount", typeof(int));
+            dt_Player_statistics.Columns.Add("Game time", typeof(string));
+
+            foreach (var item in player_Statistics_For_Clients)
+            {
+                dt_Player_statistics.Rows.Add
+                    (
+                        item.for_Name_PC,
+                        item.for_Id_PC,
+                        item.for_client_NickName,
+                        item.for_client_Kills,
+                        item.for_client_Ammo_picked_up,
+                        item.for_client_Fired_bullets,
+                        item.for_client_Med_kit_picked_up,
+                        item.for_client_HP_replenishment_amount,
+                        item.for_client_Game_time
+                    );
+            }
+            if (dataGridView.DataSource != player_Statistics_For_Clients)
+            {
+                dataGridView.DataSource = dt_Player_statistics;
+            }
+           
+
         }
 
     }

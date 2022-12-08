@@ -35,6 +35,20 @@ namespace Game_Kursak.view
             Btn = "save";
             NickNameOfPlayer = textBox_nickName.Text;
             this.Close();
+
+        }
+
+        private void textBox_nickName_TextChanged(object sender, EventArgs e)
+        {
+            
+            if (textBox_nickName.Text.Length > 16 
+                || textBox_nickName.Text.ToLower()=="drop" 
+                || textBox_nickName.Text.ToUpper() == "drop" 
+                || textBox_nickName.Text.ToLower() == "delete"
+                || textBox_nickName.Text.ToUpper() == "delete")
+            {
+                textBox_nickName.Text = "";
+            }
         }
     }
 }

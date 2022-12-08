@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMenu));
             this.label1 = new System.Windows.Forms.Label();
             this.exit = new System.Windows.Forms.Button();
             this.statistics = new System.Windows.Forms.Button();
@@ -96,13 +97,13 @@
             // 
             this.company.BackColor = System.Drawing.SystemColors.Desktop;
             this.company.BackgroundImage = global::Game_Kursak.Properties.Resources.kamuflyag;
-            this.company.Cursor = System.Windows.Forms.Cursors.PanNW;
+            this.company.Cursor = System.Windows.Forms.Cursors.Default;
             this.company.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
             this.company.FlatAppearance.BorderSize = 2;
             this.company.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.company.Font = new System.Drawing.Font("Chiller", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.company.ForeColor = System.Drawing.Color.DarkRed;
-            this.company.Location = new System.Drawing.Point(94, 72);
+            this.company.Location = new System.Drawing.Point(94, 73);
             this.company.Name = "company";
             this.company.Size = new System.Drawing.Size(163, 54);
             this.company.TabIndex = 0;
@@ -123,11 +124,13 @@
             this.Controls.Add(this.statistics);
             this.Controls.Add(this.survival);
             this.Controls.Add(this.company);
+            this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormMenu";
+            this.Text = "Defender of Ukraine";
             this.ResumeLayout(false);
             this.PerformLayout();
 

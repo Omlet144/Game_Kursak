@@ -115,6 +115,7 @@
             this.textBox_nickName.Size = new System.Drawing.Size(268, 47);
             this.textBox_nickName.TabIndex = 9;
             this.textBox_nickName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_nickName.TextChanged += new System.EventHandler(this.textBox_nickName_TextChanged);
             // 
             // label1
             // 
@@ -132,7 +133,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BackgroundImage = global::Game_Kursak.Properties.Resources.bagraund_menu;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(356, 342);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox_nickName);
@@ -140,7 +143,8 @@
             this.Controls.Add(this.menu);
             this.Controls.Add(this.restart);
             this.Controls.Add(this.save);
-            this.Cursor = System.Windows.Forms.Cursors.PanNW;
+            this.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormAfterDeathPlayer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -48,8 +48,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSimpleTcp, Version=3.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSimpleTcp.3.0.5\lib\net48\SuperSimpleTcp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -96,7 +99,7 @@
     <Compile Include="view\FormMenu.Designer.cs">
       <DependentUpon>FormMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="view_model\view_model.cs" />
+    <Compile Include="controller\controller.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -186,6 +189,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\zombie-shooter-assets\hp_Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\zombie-shooter-assets\shooter_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\zombie-shooter-assets\shooter_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\zombie-shooter-assets\shooter_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\zombie-shooter-assets\shooter_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\zombie-shooter-assets\shooters_left_right_up_down.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

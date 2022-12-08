@@ -1,5 +1,4 @@
 ﻿using Game_Kursak.model;
-using Game_Kursak.view_model;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -17,9 +16,7 @@ namespace Game_Kursak.view
 
         private void button_company_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Form_Game formGame = new Form_Game();
-            formGame.Show();
+            MessageBox.Show("Thi is Paid Mode!");
         }
 
         private void button_Survival_Click(object sender, EventArgs e)

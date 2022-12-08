@@ -1,5 +1,4 @@
-﻿
-namespace Game_Kursak.model
+﻿namespace Game_Kursak.model
 {
     public class SaveResult
     {

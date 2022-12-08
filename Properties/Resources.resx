@@ -127,8 +127,14 @@
   <data name="ammo-Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\zombie-shooter-assets\ammo-Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="shooter_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\zombie-shooter-assets\shooter_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\zombie-shooter-assets\down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hp_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\zombie-shooter-assets\hp_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="zright" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\zombie-shooter-assets\zright.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,13 +157,22 @@
   <data name="bagraund_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\zombie-shooter-assets\bagraund_menu.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="shooter_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\zombie-shooter-assets\shooter_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="zdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\zombie-shooter-assets\zdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shooter_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\zombie-shooter-assets\shooter_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bagraund_game" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\zombie-shooter-assets\bagraund_game.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="hp_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Debug\zombie-shooter-assets\hp_Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shooter_up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\zombie-shooter-assets\shooter_up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shooters_left_right_up_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\zombie-shooter-assets\shooters_left_right_up_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
